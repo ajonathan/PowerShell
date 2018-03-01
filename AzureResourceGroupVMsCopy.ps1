@@ -2,6 +2,7 @@
 # The script uses snapshot and the VMs needs managed disks to be used
 #
 # Edit varibles before running the script
+# Login to Azure PowerShell before running script. Works in Azure Cloud Shell
 # Tested with PowerShell version 4.3.0
 # Only works with VMs that are in the same location as variable $location
 #
