@@ -115,6 +115,11 @@ If(!$VMs) {
                 -SourceResourceId $snapshot.Id) `
                 -ResourceGroupName $destinationResourceGroup
 
+			# Remove Snapshot
+            Remove-AzureRmSnapshot `
+                -ResourceGroupName $destinationResourceGroup `
+                -SnapshotName $snapshotName -Force
+
             # Get attached data disks
             $disks = $vm.StorageProfile.DataDisks
             
@@ -255,11 +260,6 @@ If(!$VMs) {
                 -ResourceGroupName $destinationResourceGroup `
                 -Location $location `
                 -VM $newVM
-
-            # Remove Snapshot
-            Remove-AzureRmSnapshot `
-                -ResourceGroupName $destinationResourceGroup `
-                -SnapshotName $snapshotName -Force
         }
     }
 }
