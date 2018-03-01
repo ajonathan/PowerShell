@@ -151,6 +151,12 @@ If(!$VMs) {
                     (New-AzureRmDiskConfig  -Location $location -CreateOption Copy `
                     -SourceResourceId $snapshot.Id) `
                     -ResourceGroupName $destinationResourceGroup
+
+                # Remove Snapshot
+                Remove-AzureRmSnapshot `
+                    -ResourceGroupName $destinationResourceGroup `
+                    -SnapshotName $snapshotName -Force
+
             }
 
             # Create the public IP. In this example, the public IP address name is set to myIP.
