@@ -1,23 +1,24 @@
-# Makes a copy from VMs in one Azure Resource Group to a new Resource Group.
-# The script uses snapshot and the VMs needs managed disks to be used.
+# Makes a copy from VMs in one Azure Resource Group to a new Resource Group
+# The script uses snapshot and the VMs needs managed disks to be used
 #
-# Edit varibles before running the script.
+# Edit varibles before running the script
 # Tested with PowerShell version 4.3.0
 # Only works with VMs that are in the same location as variable $location
 #
 # Version 2018-03-01
 #
-# ----------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------
 
-$resourceGroupName = 'myvms-rg' #'<ResourceGroup>' # ResourceGroup for VMs to Clone
-$location = 'West Europe' # Location for the resources
-$destinationResourceGroup = 'CloneVM-RG1' # ResourceGroup for new VM
+$resourceGroupName = '<ResourceGroup>' # ResourceGroup for VMs to Clone
+$location = 'West Europe' # Location for resources
+$destinationResourceGroup = $resourceGroupName + '-CloneVM-RG' # ResourceGroup for new VM
 $subnetName = 'SubNet01-Clone' # subnet for the new VM
 $vnetName = 'VNET-Clone' # VNet for the new VM
 $nsgName = 'NSG-Clone' # NSG for the new VM
 $storageName = 'storageclone' # Storage account prefix name
-$storage = $null # Varible to check if storage account exist
 
+
+$storage = $null # Varible to check if storage account exist. Do not change
 
 # Get ResourceGroup
 $rg = Get-AzureRmResourceGroup `
@@ -249,9 +250,9 @@ If(!$VMs) {
                 -VM $newVM
 
             # Remove Snapshot
-#            Remove-AzureRmSnapshot `
-#                -ResourceGroupName $destinationResourceGroup `
-#                -SnapshotName $snapshotName -Force
+            Remove-AzureRmSnapshot `
+                -ResourceGroupName $destinationResourceGroup `
+                -SnapshotName $snapshotName -Force
         }
     }
 }
