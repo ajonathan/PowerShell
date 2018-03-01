@@ -6,7 +6,7 @@
 # Tested with PowerShell version 4.3.0
 # Only works with VMs that are in the same location as variable $location
 #
-# Version 2018.03.01.0
+# Version 2018.03.01.1
 #
 # ------------------------------------------------------------------------------------------
 
