@@ -19,7 +19,7 @@
 		AzureRM.Network
 		AzureRM.Compute
 			
-		Version 2018.03.04.2
+		Version 2018.03.05.0
  
 	.NOTES 
 		AUTHOR: Jonathan Andersson
