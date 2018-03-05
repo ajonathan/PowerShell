@@ -30,15 +30,14 @@ param (
 ) 
 
 # Valiables to change
-		$location = 'North Europe' # Location for resources after test failover
-		$destinationResourceGroupSuffix = '-CloneVM-RG' # ResourceGroup suffix
-		$subnetName = 'SubNet01-Clone' # subnet for the new VM
-		$vnetName = 'VNET-Clone' # VNet for the new VM
-		$nsgName = 'NSG-Clone' # NSG for the new VM
-		$storageName = 'storageclone' # Storage account prefix name
+$location = 'North Europe' # Location for resources after test failover
+$destinationResourceGroupSuffix = '-CloneVM-RG' # ResourceGroup suffix
+$subnetName = 'SubNet01-Clone' # subnet for the new VM
+$vnetName = 'VNET-Clone' # VNet for the new VM
+$nsgName = 'NSG-Clone' # NSG for the new VM
+$storageName = 'storageclone' # Storage account prefix name
 
-		$storage = $null # Varible to check if storage account exist. Do not change
-		
+$storage = $null # Varible to check if storage account exist. Do not change
 
 # Add extra logging by selecting $true
 $LoggingVerbose = $false
