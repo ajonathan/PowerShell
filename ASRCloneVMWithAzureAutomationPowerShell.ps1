@@ -19,7 +19,7 @@
 		AzureRM.Network
 		AzureRM.Compute
 			
-		Version 2018.03.05.0
+		Version 2018.03.08.1
  
 	.NOTES 
 		AUTHOR: Jonathan Andersson
@@ -36,11 +36,13 @@ $subnetName = 'SubNet01-Clone' # subnet for the new VM
 $vnetName = 'VNET-Clone' # VNet for the new VM
 $nsgName = 'NSG-Clone' # NSG for the new VM
 $storageName = 'storageclone' # Storage account prefix name
+$rgWithDateInName = $true # set to true if new resource group name should contain a date
+$publicIP = $true # set to true if VMs should have public IP
+$LoggingVerbose = $false # Add extra logging by selecting $true
 
 $storage = $null # Varible to check if storage account exist. Do not change
 
-# Add extra logging by selecting $true
-$LoggingVerbose = $false
+$time = Get-Date -format 'yymmddhhmm'
 
 If ($LoggingVerbose -eq $true) {
 	Write-output $RecoveryPlanContext
@@ -88,8 +90,13 @@ foreach($VMID in $VMinfo) {
 		}
 
 		# ResourceGroup for new VM
-		$destinationResourceGroup = $resourceGroupName + $destinationResourceGroupSuffix
+		if ($rgWithDateInName -eq $true) {
+			$destinationResourceGroup = $resourceGroupName + $time + $destinationResourceGroupSuffix
+		} else {
+			$destinationResourceGroup = $resourceGroupName + $destinationResourceGroupSuffix
+		}
 		
+
 		# Get ResourceGroup
 		$rg = Get-AzureRmResourceGroup `
 			-Location $location `
@@ -244,11 +251,13 @@ foreach($VMID in $VMinfo) {
 
 			}
 
-			# Create the public IP. In this example, the public IP address name is set to myIP.
-			$pip = New-AzureRmPublicIpAddress `
-			   -Name $ipName -ResourceGroupName $destinationResourceGroup `
-			   -Location $location `
-			   -AllocationMethod Dynamic
+			# Create the public IP if $publicIP is set to true
+			If ( $publicIP -eq $true) {
+				$pip = New-AzureRmPublicIpAddress `
+					-Name $ipName -ResourceGroupName $destinationResourceGroup `
+					-Location $location `
+					-AllocationMethod Dynamic
+			}
 
 			# Create the NIC
 			$nic = New-AzureRmNetworkInterface `
@@ -307,17 +316,17 @@ foreach($VMID in $VMinfo) {
 				Write-Output "Added data disk $dataDiskName to VM $newVmName"
 			}
 
-			# Create storage account
+			# Create storage account. Will be used for VM diagnostic
 			while ($storage -eq $null) {
 				$number = Get-Random -Minimum 10000 -Maximum 99999
 				$newStorageName = "$storageName$number"
-       
+      
 				# Check if storage account already exist
 				$checkStorateAccount = Get-AzureRmStorageAccount `
 					-ResourceGroupName $destinationResourceGroup `
 					-Name $newStorageName `
 					-ErrorAction SilentlyContinue
-            
+           
 				if ($checkStorateAccount -eq $null) {
 					# Create storage account
 					$storage = New-AzureRmStorageAccount `
