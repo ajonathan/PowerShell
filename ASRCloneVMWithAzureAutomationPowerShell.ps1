@@ -10,6 +10,9 @@
 		Edit varibles before running the script under the varibles section
 		Only works with VMs that are in the same location as variable $location
 		
+		The script is provided “AS-IS” with no warranties and I don’t take any 
+		responsibility of errors that can occur.
+		
 		For more information see systemcenterme.com
 
 		The following AzureRM Modules are required
