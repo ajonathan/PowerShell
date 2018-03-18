@@ -12,6 +12,9 @@
 		$EmailFrom
 		$EmailTo
 		
+		The script is provided “AS-IS” with no warranties and I don’t take any 
+		responsibility of errors that can occur.
+		
 		For more information see systemcenterme.com
 			
 		Version 2018.03.18.0
