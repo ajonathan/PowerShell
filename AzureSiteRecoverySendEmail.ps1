@@ -17,7 +17,7 @@
 		
 		For more information see systemcenterme.com
 			
-		Version 2018.03.18.0
+		Version 2018.03.18.2
  
 	.NOTES 
 		AUTHOR: Jonathan Andersson
@@ -33,13 +33,10 @@ $FailoverType = $RecoveryPlanContext.FailoverType
 $GroupId = $RecoveryPlanContext.GroupId
 
 # Get credential from the Azure Automation account
-$cred = Get-AutomationPSCredential -Name 'SendEmailCred'
+$credential = Get-AutomationPSCredential -Name 'SendEmailCred'
 
 # Prepare the email
 # Edit this section to fit your needs
-$Username = $cred.Username
-$Password = $cred.Password
-$credential = New-Object System.Management.Automation.PSCredential $Username, $Password
 $SMTPServer = "smtp.sendgrid.net"
 $EmailFrom = "EmailFrom@mysite.com"
 $EmailTo = "EmailTo@mysite.com"
