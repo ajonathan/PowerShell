@@ -6,6 +6,9 @@
 # Tested with PowerShell version 4.3.0
 # Only works with VMs that are in the same location as variable $location
 #
+# The script is provided “AS-IS” with no warranties and I don’t take any 
+# responsibility of errors that can occur.
+#
 # Version 2018.03.01.1
 #
 # ------------------------------------------------------------------------------------------
