@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script creates a VM and join it to a domain
+# Create a VM and join it to a domain
 
 rg="serverrg"
 vmname="servername"
