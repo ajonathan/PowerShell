@@ -100,7 +100,6 @@ process {
 				$destinationResourceGroup = $resourceGroupName + $destinationResourceGroupSuffix
 			}
 			
-
 			# Get ResourceGroup
 			$rg = Get-AzureRmResourceGroup `
 				-Location $location `
