@@ -1,4 +1,3 @@
-# powershell and bash
+# PowerShell and Bash scripts
 PowerShell and Bash Scripts
 
-Some are for Azure Automation and some just for shell
