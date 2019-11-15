@@ -1,4 +1,5 @@
 function New-ArmVmCopy {
+
 <# 
     .DESCRIPTION 
         Makes a copy from VMs in one Azure Resource Group to a new Resource Group
@@ -12,7 +13,7 @@ function New-ArmVmCopy {
         The script is provided “AS-IS” with no warranties and I don’t take any 
         responsibility of errors that can occur.
 
-        Version 2018.03.01.1
+        Version 2019.11.15.0
 
         .NOTES
             AUTHOR: Jonathan Andersson
@@ -26,7 +27,7 @@ function New-ArmVmCopy {
                 -NsgName 'NSG-Clone' `
                 -StorageName 'storageclone'
 #>
-
+    [CmdletBinding (DefaultParametersetName="ResourceGroupName")]
     param (
         # Azure Resource Group for VMs to Clone
         [Parameter(ParameterSetName="ResourceGroupName", Mandatory=$true)]
@@ -94,16 +95,16 @@ function New-ArmVmCopy {
             Write-Output "VNet already exist"
         } else {
             $singleSubnet = New-AzureRmVirtualNetworkSubnetConfig `
-            -Name $subnetName `
-            -AddressPrefix 10.0.0.0/24
+                -Name $subnetName `
+                -AddressPrefix 10.0.0.0/24
 
             # Create the vNet and the address prefix for the virtual network to 10.0.0.0/16. 
             $vnet = New-AzureRmVirtualNetwork `
-            -Name $vnetName `
-            -ResourceGroupName $destinationResourceGroup `
-            -Location $location `
-            -AddressPrefix 10.0.0.0/16 `
-            -Subnet $singleSubnet
+                -Name $vnetName `
+                -ResourceGroupName $destinationResourceGroup `
+                -Location $location `
+                -AddressPrefix 10.0.0.0/16 `
+                -Subnet $singleSubnet
         }
 
         # Get all VMs in a RG
@@ -152,9 +153,9 @@ function New-ArmVmCopy {
                     # Take snapshot of OS disk
                     $snapshotName = $VM.Name + $snapshotSuffix
                     $snapShot = New-AzureRmSnapshot `
-                    -Snapshot $snapshotConfig `
-                    -SnapshotName $snapshotName `
-                    -ResourceGroupName $destinationResourceGroup
+                        -Snapshot $snapshotConfig `
+                        -SnapshotName $snapshotName `
+                        -ResourceGroupName $destinationResourceGroup
 
                     # Create the managed OS disk
                     $osDisk = New-AzureRmDisk -DiskName $osDiskName -Disk `
@@ -213,9 +214,10 @@ function New-ArmVmCopy {
 
                     # Create the public IP. In this example, the public IP address name is set to myIP.
                     $pip = New-AzureRmPublicIpAddress `
-                    -Name $ipName -ResourceGroupName $destinationResourceGroup `
-                    -Location $location `
-                    -AllocationMethod Dynamic
+                        -Name $ipName `
+                        -ResourceGroupName $destinationResourceGroup `
+                        -Location $location `
+                        -AllocationMethod Dynamic
 
                     # Create the NIC
                     $nic = New-AzureRmNetworkInterface `
