@@ -1,5 +1,5 @@
 function New-ArmVmCopy {
-
+    
 <# 
     .DESCRIPTION 
         Makes a copy from VMs in one Azure Resource Group to a new Resource Group
@@ -27,6 +27,7 @@ function New-ArmVmCopy {
                 -NsgName 'NSG-Clone' `
                 -StorageName 'storageclone'
 #>
+
     [CmdletBinding (DefaultParametersetName="ResourceGroupName")]
     param (
         # Azure Resource Group for VMs to Clone
