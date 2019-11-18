@@ -6,7 +6,9 @@ function PSTemplate {
 
     .NOTES
         Notes
+        CREATED WITH: Visual Studio Code
         AUTHOR: Jonathan
+        FILENAME: PSTemplate.ps1
 
     .PARAMETER parameter1
         First parameter
@@ -31,11 +33,28 @@ function PSTemplate {
         [string]
         $SecondParameter
     )
-    begin {}
+    begin {
+        $Time = Get-Date
+    }
     process {
-        Write-Host "$FirstParameter $SecondParameter"
+        try {
+            if (-not (Get-Item -Path c:\Logs)) {
+                New-Item -Path c:\Logs -ItemType Directory
+            }
+            
+            Write-Host "$FirstParameter $SecondParameter"
+            $LastBootUpTime = (Get-CimInstance -ClassName win32_operatingsystem).LastBootUpTime
+            Write-Host "LastBootUpTime: $LastBootUpTime"
+            "$Time - LastBootUpTime $LastBootUpTime" | out-file c:\Logs\PSTemplate.log -append
+        }
+        catch {
+            $ErrorMessage = $_.Exception.Message
+            #$FailedItem = $_.Exception.ItemName
+            "$Time - $ErrorMessage" | out-file c:\Logs\PSTemplate.log -append
+        }
+        
     }
     end {}
 }
 
-PSTemplate -FirstParameter "text"
+PSTemplate -FirstParameter "parameter1"
