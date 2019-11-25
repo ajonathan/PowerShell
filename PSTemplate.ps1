@@ -1,6 +1,7 @@
 function PSTemplate {
 
 <#
+    https://github.com/PoshCode/PowerShellPracticeAndStyle/blob/master/Style-Guide/Documentation-and-Comments.md#doc-01-write-comment-based-help
     .DESCRIPTION    
         Description
 
