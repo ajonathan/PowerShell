@@ -9,7 +9,7 @@ function New-ADUserAutoGenerate {
         .PARAMETER GivenName
             Add a given name to the user
 
-        .PARAMETERSurName
+        .PARAMETER SurName
             Add a surname to the user
 
         .EXAMPLE
