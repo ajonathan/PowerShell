@@ -4,7 +4,7 @@ function Get-ComputerInfoRemote {
             Use this script to get ComputerInfo from remote machines
             Load the script with  . .\Get-ComputerInfoRemote.ps1
 
-        .NOTE
+        .NOTES
             Author: Jonathan
 
         .PARAMETER UserName
