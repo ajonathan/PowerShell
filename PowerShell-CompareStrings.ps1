@@ -56,7 +56,98 @@ function Show-ArrayStringCompare {
             $result | Where-Object -Property SideIndicator -eq "=>" | Select-Object -Property @{Name = 'Exist in second list'; Expression = {$_.InputObject}}
         }
         if ($null -eq $ExistInBothList -and $null -eq $ExistOnlyInFirstList) {
-            Write-Host "Please add -ExistInBothList or -ExistInFirstList parameter"
+            [PSCustomObject] $ResultObj
+            [System.Collections.ArrayList] $list = @()
+            
+            foreach ($info in $result) {
+                if ("==" -eq $info.SideIndicator) {
+                    $ResultObj = [PSCustomObject]@{
+                        BothList  = $info.InputObject
+                        FirstList  = $null
+                        SecondList = $null
+                    }
+                    $list.Add($ResultObj) | Out-Null
+                }
+                if ("<=" -eq $info.SideIndicator) {
+                    $ResultObj = [PSCustomObject]@{
+                        BothList  = $null
+                        FirstList  = $info.InputObject
+                        SecondList = $null
+                    }
+                    $list.Add($ResultObj) | Out-Null
+                }
+                if ("=>" -eq $info.SideIndicator) {
+                    $ResultObj = [PSCustomObject]@{
+                        BothList  = $null
+                        FirstList  = $null
+                        SecondList = $info.InputObject
+                    }
+                    $list.Add($ResultObj) | Out-Null
+                }
+            }
+            Get-OutputList -List $list
         }
+    }
+}
+
+function Get-OutputList {
+    <#
+        .DESCRIPTION
+            Output of an array with objects withour $null and "" fields
+
+        .NOTES
+            AUTHOR: jonathan
+
+        .PARAMETER List
+            Array with object with BothList, FirstList and SecondList
+    #>
+
+    [CmdletBinding ()]
+    param (
+        [Parameter()]
+        [Array]
+        $List
+    )
+    Process {
+        [int] $HighNr
+        [System.Collections.ArrayList] $OutputList = @()
+
+        $BothList = ($List.BothList |  Where-Object { $_ })
+        $FirstList = ($List.FirstList |  Where-Object { $_ })
+        $SecondList = ($List.SecondList |  Where-Object { $_ })
+
+        [int] $BothListNr = 0
+        [int] $FirstListNr = 0
+        [int] $SecondListNr = 0
+
+        # Get the highest number
+        $HighNr = ($BothList.count, $FirstList.count, $SecondList.count | Measure-Object -Maximum).Maximum -as [int]
+
+        # Add all values to a new Array with Objects
+        for ([int] $i = 0; $i -lt $HighNr; ++$i) {
+            # Create Object
+            $ResultObj = [PSCustomObject]@{
+                BothList  = $null
+                FirstList  = $null
+                SecondList = $null
+            }
+            $OutputList.Add($ResultObj) | Out-Null
+            # Add BothListNr value to object in Array
+            if ($null -ne $BothList[$i]) {
+                $OutputList[$BothListNr].BothList = $BothList[$i]
+                $BothListNr++
+            }
+            # Add FirstList value to object in Array
+            if ($null -ne $FirstList[$i]) {
+                $OutputList[$FirstListNr].FirstList = $FirstList[$i]
+                $FirstListNr++
+            }
+            # Add SecondList value to object in Array
+            if ($null -ne $SecondList[$i]) {
+                $OutputList[$SecondListNr].SecondList = $SecondList[$i]
+                $SecondListNr++
+            }
+        }
+        Write-output $OutputList
     }
 }
