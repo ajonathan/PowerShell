@@ -2,7 +2,7 @@
 function Show-ArrayStringCompare {
     <#
         .DESCRIPTION
-            Compares two String Array's
+            Compares two string array's
         
         .PARAMETER ArrayOne
             Add the first Array
@@ -20,6 +20,7 @@ function Show-ArrayStringCompare {
             [string[]] $a = @("a","b","r","y","j","s","c")
             [string[]] $b = @("p","a","e","m","w","s","c")
             Show-ArrayStringCompare -ArrayOne $a -ArrayTwo $b -ExistInBothList $true
+            Show-ArrayStringCompare -ArrayOne $a -ArrayTwo $b
     #>
     
     [CmdletBinding()]
@@ -112,9 +113,10 @@ function Get-OutputList {
         [int] $HighNr
         [System.Collections.ArrayList] $OutputList = @()
 
-        $BothList = ($List.BothList |  Where-Object { $_ })
-        $FirstList = ($List.FirstList |  Where-Object { $_ })
-        $SecondList = ($List.SecondList |  Where-Object { $_ })
+        # Create Array and remove $null and ""
+        [string[]] $BothList = ($List.BothList |  Where-Object { $_ })
+        [string[]] $FirstList = ($List.FirstList |  Where-Object { $_ })
+        [string[]] $SecondList = ($List.SecondList |  Where-Object { $_ })
 
         [int] $BothListNr = 0
         [int] $FirstListNr = 0
@@ -132,6 +134,7 @@ function Get-OutputList {
                 SecondList = $null
             }
             $OutputList.Add($ResultObj) | Out-Null
+
             # Add BothListNr value to object in Array
             if ($null -ne $BothList[$i]) {
                 $OutputList[$BothListNr].BothList = $BothList[$i]
