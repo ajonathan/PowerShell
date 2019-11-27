@@ -101,6 +101,9 @@ function Get-OutputList {
 
         .PARAMETER List
             Array with object with BothList, FirstList and SecondList
+
+        .EXAMPLE
+            Get-OutputList -List $list
     #>
 
     [CmdletBinding ()]
