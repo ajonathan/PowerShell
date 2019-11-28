@@ -87,6 +87,9 @@ function New-ADUserCreate {
 
         .PARAMETER SamAccountName
             The SamAccountName of the account
+
+        .EXAMPLE
+            New-ADUserCreate -GivenName givenname -SurName surname -SamAccountName samaccountname
     #>
 
     [CmdletBinding ()]
@@ -102,7 +105,7 @@ function New-ADUserCreate {
     Process {
         try {
             New-ADUser -Name "$GivenName $SurName ($SamAccountName)" -DisplayName "$GivenName $SurName" -SamAccountName $SamAccountName -GivenName $GivenName -Surname $SurName -UserPrincipalName "$SamAccountName@contoso.com"
-            Write-Output $SamAccountName
+            Write-Output "User with samaccountname $SamAccountName have been created"
             return $true
         }
         catch {
@@ -122,7 +125,6 @@ function Get-ADUserSamAccountName {
 
         .PARAMETER SamAccountName
             The SamAccountName that should be checked if it exist
-         
     #>
     
     [CmdletBinding ()]
