@@ -1,34 +1,38 @@
-function Add-ADGroupMember
-{
+function Add-ADGroupMember {
     <#
         .DESCRIPTION
             Adds users from a specific 
 
         .NOTES
+            AUTHOR: Jonathan
 
         .PARAMETER GroupName
-        
-        .PARAMETER Attribute
+            Name of the group that users should be added to
 
-        .PARAMETER AttributeValue
+        .PARAMETER Properties
+            Properties that decides if user should be added to group
+
+        .PARAMETER PropertiesValue
+            Priperties value that decides if user should be added to group
 
         .EXAMPLE
-
+            Get-ADUser user01 | Set-ADUser -Department "IT"
+            Add-ADGroupMember -GroupName mygroup -Properties Department -PropertiesValue IT
     #>
     Param (
         [Parameter (Mandatory = $true, ValueFromPipeline = $true)]
         [string] $GroupName,
         [Parameter (Mandatory = $true)]
-        [string] $Attribute,
+        [string] $Properties,
         [Parameter (Mandatory = $true)]
-        [string] $AttributeValue
+        [string] $PropertiesValue
     )
         Process {
         try
         {
             Import-Module ActiveDirectory
             $Group = Get-ADGroup $GroupName
-            $Users = Get-ADUser -Filter {$Attribute -like $AttributeValue}
+            $Users = Get-ADUser -Filter {$Properties -like $PropertiesValue}
             
             Write-Output "Users added to group $GroupName :"
             foreach ($user in $users) 
