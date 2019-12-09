@@ -1,7 +1,9 @@
 <#
     .DESCRIPTION
         Removes Resource Groups that have a tag "RemoveResourceGroup" sat to "Yes"
+        
         Script can be used in both Azure Automation and direct from PowerShell prompt
+        The script have been tested in Azure Automation with module AzureRM.Resources version 6.7.3
 
     .NOTES
         Author: Jonathan Andersson
@@ -31,7 +33,7 @@ param (
     
     [Parameter()]
     [string]
-    $TagValue = "Yes",
+    $TagValue = "Yes",      
 
     [Parameter()]
     [bool]
@@ -55,7 +57,7 @@ try {
             -ServicePrincipal `
             -TenantId $servicePrincipalConnection.TenantId `
             -ApplicationId $servicePrincipalConnection.ApplicationId `
-            -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+            -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint | Out-Null
     }
     $Tag.Add($TagResourceGroupName, $TagValue)
     Write-Output "Using TagResourceGroupName: $TagResourceGroupName and TagValue: $TagValue"
@@ -63,8 +65,8 @@ try {
     $ResourceGroups = Get-AzureRmResourceGroup -Tag $Tag
 
     foreach ($ResourceGroup in $ResourceGroups) {
-        Remove-AzureRmResourceGroup -Name $ResourceGroup.ResourceGroupName -Force
-        Write-Output "Removed Resource Group: $ResourceGroup.ResourceGroupName"
+        Remove-AzureRmResourceGroup -Name $ResourceGroup.ResourceGroupName -Force | Out-Null
+        Write-Output "Removed Resource Group: " $ResourceGroup.ResourceGroupName
     }
 } 
 catch {
