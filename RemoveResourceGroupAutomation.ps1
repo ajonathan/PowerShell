@@ -22,7 +22,7 @@
         A<ure Automation RunAs Connection to Azure
 
     .EXAMPLE
-        RemoveResourceGroupAutomation -TagResourceGroupName "RGName" -TagValue "Yes"
+        RemoveResourceGroupAutomation -TagResourceGroupName "RGName" -TagValue "Yes" -AzureAutomation $false
 #>
 
 [CmdletBinding()]
