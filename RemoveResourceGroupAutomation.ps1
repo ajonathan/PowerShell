@@ -1,6 +1,6 @@
 <#
     .DESCRIPTION
-        Removes Resource Groups that have a tag "RemoveResourceGroup" sat to "Yes"
+        Removes Resource Groups that have a tag "RemoveResourceGroup" set to "Yes"
         
         Script can be used in both Azure Automation and direct from PowerShell prompt
         The script have been tested in Azure Automation with module AzureRM.Resources version 6.7.3
