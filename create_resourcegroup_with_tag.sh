@@ -32,4 +32,4 @@ if [ "$rg" == "" ]
         exit 1
 fi
 
-az group create -n $rg -l $location --tag "$tagname"="$tagvalue"
+az group create -n "$rg" -l "$location" --tag "$tagname"="$tagvalue"
