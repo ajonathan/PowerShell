@@ -6,7 +6,7 @@ location="westeurope"
 tagname="RemoveResourceGroup"
 tagvalue="Yes"
 
-# input to script
+# input section
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
