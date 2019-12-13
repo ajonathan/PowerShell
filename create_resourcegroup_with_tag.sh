@@ -1,4 +1,4 @@
-# Creates a resource group with one tag
+# Creates a resource group with a tag
 # Example: .\create_resourcegroup_with_tag.sh -g myrg
 
 # Variables to be set when creating the resource group
@@ -6,6 +6,7 @@ location="westeurope"
 tagname="RemoveResourceGroup"
 tagvalue="Yes"
 
+# input to script
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
