@@ -19,7 +19,8 @@ case $key in
     shift
     ;;
     -h|--help)
-    echo "Please add -g for Resource Group Name" >&2; exit 1
+    echo "Add -g for Resource Group Name" >&2; exit 1
+    
     ;;
     -*) echo "unknown option: $1" >&2; exit 1;;
     *) handle_argument "$1"; shift 1;;
@@ -28,7 +29,7 @@ done
 
 if [ "$rg" == "" ]
     then
-        echo "Missing argument Resource Group Name"
+        echo "Missing -g argument for Resource Group Name"
         exit 1
 fi
 
