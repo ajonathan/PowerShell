@@ -10,6 +10,7 @@ function PSTemplate {
         CREATED WITH: Visual Studio Code
         AUTHOR: Jonathan
         FILENAME: PSTemplate.ps1
+        LAST UPDATED: 12/09/2019
 
     .PARAMETER parameter1
         First parameter
